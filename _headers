@@ -1,0 +1,24 @@
+# Cloudflare Pages - Cache Control Headers
+
+# HTML: sin caché (siempre actualizado)
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# JavaScript y CSS: caché corto (1 hora)
+/css/*
+  Cache-Control: public, max-age=3600
+
+/js/*
+  Cache-Control: public, max-age=3600
+
+# Imágenes del sitio estático (logo, etc.)
+/images/*
+  Cache-Control: public, max-age=3600
+
+# Contenido multimedia dinámico: SIN caché
+# Así cada deploy muestra las imágenes actualizadas
+/inicio/*
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/casos/*
+  Cache-Control: no-cache, no-store, must-revalidate
