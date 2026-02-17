@@ -1,0 +1,8 @@
+{
+  "name": "tripya-travel",
+  "version": "1.0.0",
+  "description": "Sitio web TripYa Travel",
+  "scripts": {
+    "build": "node build.js"
+  }
+}
