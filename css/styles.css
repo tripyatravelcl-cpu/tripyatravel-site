@@ -208,7 +208,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--color-gris);
+    background: #FFFFFF; /* var(--color-gris);*/
 }
 
 .carousel-slide-media img,
