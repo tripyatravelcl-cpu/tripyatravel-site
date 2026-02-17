@@ -263,7 +263,7 @@ body {
     height: 100%;
     background: var(--color-turquesa);
     width: 0;
-    animation: progress 5s linear forwards;
+    animation: progress 10s linear forwards;
 }
 
 @keyframes progress {

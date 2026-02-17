@@ -251,11 +251,10 @@ const CarouselModule = {
 
         const currentSlideType = this.slides[this.currentSlide]?.type;
         if (currentSlideType === 'image') {
+            // Remover la clase, forzar reflow y volver a agregar para reiniciar animación
+            progress.classList.remove('active');
+            void progress.offsetWidth; // Forzar reflow
             progress.classList.add('active');
-            progress.style.animation = 'none';
-            setTimeout(() => {
-                progress.style.animation = '';
-            }, 10);
         } else {
             progress.classList.remove('active');
         }
@@ -267,7 +266,7 @@ const CarouselModule = {
             if (currentSlideType === 'image') {
                 this.nextSlide();
             }
-        }, 5000);
+        }, 10000); // 10 segundos para imágenes
     },
 
     pauseAutoplay() {
