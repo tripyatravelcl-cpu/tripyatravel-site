@@ -116,6 +116,11 @@ const CarouselModule = {
         }
     },
 
+    bustCache(url) {
+        const v = (typeof CACHE_VERSION !== 'undefined') ? CACHE_VERSION : Date.now();
+        return `${url}?v=${v}`;
+    },
+
     renderCarousel() {
         const container = document.getElementById('carouselSlides');
         const dotsContainer = document.getElementById('carouselDots');
@@ -134,7 +139,7 @@ const CarouselModule = {
             
             if (slide.type === 'image') {
                 const img = document.createElement('img');
-                img.src = slide.media;
+                img.src = this.bustCache(slide.media);
                 img.alt = slide.title;
                 img.onerror = () => {
                     console.error(`Error al cargar imagen: ${slide.media}`);
@@ -143,7 +148,7 @@ const CarouselModule = {
                 mediaElement.appendChild(img);
             } else if (slide.type === 'video') {
                 const video = document.createElement('video');
-                video.src = slide.media;
+                video.src = this.bustCache(slide.media);
                 video.controls = false;
                 video.muted = true;
                 video.playsInline = true;
@@ -304,6 +309,11 @@ const StoriesModule = {
         }
     },
 
+    bustCache(url) {
+        const v = (typeof CACHE_VERSION !== 'undefined') ? CACHE_VERSION : Date.now();
+        return `${url}?v=${v}`;
+    },
+
     renderStories() {
         const container = document.getElementById('storiesContainer');
         if (!container) return;
@@ -319,7 +329,7 @@ const StoriesModule = {
             
             if (story.type === 'image') {
                 const img = document.createElement('img');
-                img.src = story.media;
+                img.src = this.bustCache(story.media);
                 img.alt = story.title;
                 img.loading = 'lazy';
                 img.onerror = () => {
@@ -329,7 +339,7 @@ const StoriesModule = {
                 mediaElement.appendChild(img);
             } else if (story.type === 'video') {
                 const video = document.createElement('video');
-                video.src = story.media;
+                video.src = this.bustCache(story.media);
                 video.controls = false;
                 video.muted = true;
                 video.playsInline = true;

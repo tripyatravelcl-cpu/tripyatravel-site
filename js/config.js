@@ -50,3 +50,8 @@ const CONTENIDO_HISTORIAS = [
 
 // NO EDITES DEBAJO DE ESTA LÍNEA
 // ========================================
+
+// Cache-busting: fuerza al navegador a pedir siempre la versión más nueva
+// Cambia este número cada vez que actualices imágenes en el repo
+// Ejemplo: si hoy es 17/02/2026, pon: const CACHE_VERSION = '20260217';
+const CACHE_VERSION = '20260217';
