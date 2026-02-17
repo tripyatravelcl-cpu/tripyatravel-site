@@ -174,7 +174,7 @@ const CarouselModule = {
             `;
             
             slideElement.appendChild(mediaElement);
-            slideElement.appendChild(contentElement);
+            //slideElement.appendChild(contentElement); // se comenta para que no aparezca titulo y descripción de cada imagen
             container.appendChild(slideElement);
 
             const dot = document.createElement('button');
