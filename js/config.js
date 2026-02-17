@@ -6,4 +6,4 @@
 
 const CONTENIDO_CARRUSEL = [];
 const CONTENIDO_HISTORIAS = [];
-const CACHE_VERSION = '0';
+const CACHE_VERSION = '1.1';
