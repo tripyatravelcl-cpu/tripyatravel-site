@@ -61,7 +61,7 @@ body {
     top: 0;
     z-index: 1000;
     padding: 20px 0;
-    border-bottom: 3px solid var(--color-turquesa);
+    border-bottom: 2px solid var(--color-arena);
 }
 
 .header-content {
@@ -385,7 +385,7 @@ body {
 .info-section {
     background: var(--color-blanco);
     padding: 50px 0;
-    border-top: 4px solid var(--color-turquesa);
+    border-top: 1px solid var(--color-arena);
     box-shadow: 0 -2px 8px rgba(18, 182, 200, 0.1);
 }
 
@@ -597,7 +597,7 @@ body {
     background: var(--color-arena);
     color: var(--color-gris);
     padding: 60px 0 30px;
-    border-top: 3px solid var(--color-turquesa);
+    border-bottom: 1px solid var(--color-arena);;
 }
 
 .footer-content {
