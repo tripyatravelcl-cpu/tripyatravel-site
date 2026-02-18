@@ -166,11 +166,18 @@ const CarouselModule = {
                 mediaElement.appendChild(video);
             }
             
+            /*
             const contentElement = document.createElement('div');
             contentElement.className = 'carousel-slide-content';
             contentElement.innerHTML = `
                 <h2 class="carousel-slide-title">${this.escapeHtml(slide.title)}</h2>
                 <p class="carousel-slide-text">${this.escapeHtml(slide.text)}</p>
+            `;*/
+            const contentElement = document.createElement('div');
+            contentElement.className = 'carousel-slide-content';
+            contentElement.innerHTML = `
+                <h2 class="carousel-slide-title">${slide.title}</h2>
+                <p class="carousel-slide-text">${slide.text}</p>
             `;
             
             slideElement.appendChild(mediaElement);
