@@ -399,9 +399,13 @@ const StoriesModule = {
             
             const contentElement = document.createElement('div');
             contentElement.className = 'story-content';
-            contentElement.innerHTML = `
+            /*contentElement.innerHTML = `
                 <h3 class="story-title">${this.escapeHtml(story.title)}</h3>
                 <p class="story-text">${this.escapeHtml(story.text)}</p>
+            `;*/
+             contentElement.innerHTML = `
+                <h3 class="story-title">${story.title}</h3>
+                <p class="story-text">${story.text}</p>
             `;
             
             storyCard.appendChild(mediaElement);
