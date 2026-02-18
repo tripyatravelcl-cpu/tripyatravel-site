@@ -100,13 +100,13 @@ const CarouselModule = {
     currentSlide: 0,
     slides: [],
     autoplayInterval: null,
+    isPaused: false,
 
     init() {
         this.loadCarouselContent();
     },
 
     loadCarouselContent() {
-        // Usar contenido de la configuración
         this.slides = CONTENIDO_CARRUSEL;
         
         if (this.slides && this.slides.length > 0) {
@@ -196,33 +196,77 @@ const CarouselModule = {
     setupCarouselControls() {
         const prevBtn = document.getElementById('carouselPrev');
         const nextBtn = document.getElementById('carouselNext');
+        const playPauseBtn = document.getElementById('carouselPlayPause');
 
         if (prevBtn) prevBtn.addEventListener('click', () => this.prevSlide());
         if (nextBtn) nextBtn.addEventListener('click', () => this.nextSlide());
+        if (playPauseBtn) playPauseBtn.addEventListener('click', () => this.togglePlayPause());
 
         const container = document.querySelector('.carousel-container');
         if (container) {
-            container.addEventListener('mouseenter', () => this.pauseAutoplay());
-            container.addEventListener('mouseleave', () => this.resumeAutoplay());
+            container.addEventListener('mouseenter', () => {
+                if (!this.isPaused) {
+                    this.pauseAutoplay();
+                }
+            });
+            container.addEventListener('mouseleave', () => {
+                if (!this.isPaused) {
+                    this.resumeAutoplay();
+                }
+            });
+        }
+    },
+
+    togglePlayPause() {
+        const playPauseBtn = document.getElementById('carouselPlayPause');
+        const playIcon = playPauseBtn.querySelector('.play-icon');
+        const pauseIcon = playPauseBtn.querySelector('.pause-icon');
+        const container = document.getElementById('carouselSlides');
+        const currentVideo = container.querySelectorAll('video')[this.currentSlide];
+
+        this.isPaused = !this.isPaused;
+
+        if (this.isPaused) {
+            // Pausar
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+            this.pauseAutoplay();
+            if (currentVideo) {
+                currentVideo.pause();
+            }
+        } else {
+            // Reproducir
+            playIcon.style.display = 'none';
+            pauseIcon.style.display = 'block';
+            this.resumeAutoplay();
+            if (currentVideo) {
+                currentVideo.play().catch(e => console.log('Autoplay prevented:', e));
+            }
         }
     },
 
     goToSlide(index) {
         this.currentSlide = index;
         this.updateCarousel();
-        this.resetAutoplay();
+        if (!this.isPaused) {
+            this.resetAutoplay();
+        }
     },
 
     prevSlide() {
         this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
         this.updateCarousel();
-        this.resetAutoplay();
+        if (!this.isPaused) {
+            this.resetAutoplay();
+        }
     },
 
     nextSlide() {
         this.currentSlide = (this.currentSlide + 1) % this.slides.length;
         this.updateCarousel();
-        this.resetAutoplay();
+        if (!this.isPaused) {
+            this.resetAutoplay();
+        }
     },
 
     updateCarousel() {
@@ -242,7 +286,9 @@ const CarouselModule = {
         allVideos.forEach((video, index) => {
             if (index === this.currentSlide) {
                 video.currentTime = 0;
-                video.play().catch(e => console.log('Autoplay prevented:', e));
+                if (!this.isPaused) {
+                    video.play().catch(e => console.log('Autoplay prevented:', e));
+                }
             } else {
                 video.pause();
                 video.currentTime = 0;
@@ -251,9 +297,8 @@ const CarouselModule = {
 
         const currentSlideType = this.slides[this.currentSlide]?.type;
         if (currentSlideType === 'image') {
-            // Remover la clase, forzar reflow y volver a agregar para reiniciar animación
             progress.classList.remove('active');
-            void progress.offsetWidth; // Forzar reflow
+            void progress.offsetWidth;
             progress.classList.add('active');
         } else {
             progress.classList.remove('active');
@@ -261,12 +306,13 @@ const CarouselModule = {
     },
 
     startAutoplay() {
+        if (this.isPaused) return;
         this.autoplayInterval = setInterval(() => {
             const currentSlideType = this.slides[this.currentSlide]?.type;
             if (currentSlideType === 'image') {
                 this.nextSlide();
             }
-        }, 10000); // 10 segundos para imágenes
+        }, 10000);
     },
 
     pauseAutoplay() {
@@ -277,7 +323,7 @@ const CarouselModule = {
     },
 
     resumeAutoplay() {
-        if (!this.autoplayInterval && this.slides.length > 0) {
+        if (!this.autoplayInterval && this.slides.length > 0 && !this.isPaused) {
             this.startAutoplay();
         }
     },
